@@ -6,12 +6,7 @@ find_package(catkin REQUIRED COMPONENTS
   dji_osdk_ros
 )
 
-catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES flie_swarm_core
-#  CATKIN_DEPENDS roscpp dji_osdk_ros
-#  DEPENDS system_lib
-)
+catkin_package()
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
@@ -19,3 +14,4 @@ include_directories(
 
 add_executable(ros_swarm_adapter_node src/ros_swarm_adapter_node.cpp)
 target_link_libraries(ros_swarm_adapter_node ${catkin_LIBRARIES})
+add_dependencies(ros_swarm_adapter_node ${catkin_EXPORTED_TARGETS})
