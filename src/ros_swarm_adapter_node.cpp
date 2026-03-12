@@ -4,11 +4,11 @@
 #include <dji_osdk_ros/ObtainControlAuthority.h>
 
 int main(int argc, char** argv) {
-    ros::init(argc, argv, "dji_flight_test");
+    ros::init(argc, argv, "ros_swarm_adapter_node");
     ros::NodeHandle nh;
 
     // The default namespace for the DJI OSDK ROS node is usually /dji_osdk_ros
-    std::string ns = "/dji_osdk_ros";
+    std::string ns = "/swarm_member_1/dji_osdk_ros";
 
     ros::ServiceClient auth_client = nh.serviceClient<dji_osdk_ros::ObtainControlAuthority>(ns + "/obtain_release_control_authority");
     ros::ServiceClient task_client = nh.serviceClient<dji_osdk_ros::FlightTaskControl>(ns + "/flight_task_control");
