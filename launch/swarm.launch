@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <group ns="swarm_member_1">
+    <param name="robot_description" command="$(find xacro)/xacro '$(find flie_swarm_core)/urdf/m100_sim.xacro' robot_namespace:=swarm_member_1" />
+    
+    <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" 
+          args="-param robot_description -urdf -x 0 -y 0 -z 0.5 -model swarm_member_1" 
+          respawn="false" output="screen" />
+          
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="swarm_member_1" /> 
+    </node>
+  </group>
+</launch>
