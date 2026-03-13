@@ -30,10 +30,13 @@
               gimbal_roll_controller
               gimbal_pitch_controller
               gimbal_yaw_controller
-              body_position_controller
               body_velocity_controller
               body_attitude_controller
               --timeout 20">
+
     </node>
   </group>
 </launch>
+
+<!-- body_position_controller -->
+
