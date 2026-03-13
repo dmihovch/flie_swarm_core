@@ -4,6 +4,8 @@ project(flie_swarm_core)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   dji_osdk_ros
+  geometry_msgs
+  nav_msgs
 )
 
 catkin_package()

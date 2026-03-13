@@ -9,7 +9,7 @@
   </include>
 
   <group ns="swarm_member_1">
-    <param name="robot_description" command="$(find xacro)/xacro '$(find flie_swarm_core)/urdf/m100_sim.xacro' robot_namespace:=swarm_member_1" />
+    <param name="robot_description" command="$(find xacro)/xacro '$(find flie_swarm_core)/urdf/m100_sim.xacro' robot_namespace:=swarm_member_1 hitl_model:=false rotors_controlled:=false" />
     
     <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" 
           args="-param robot_description -urdf -x 0 -y 0 -z 0.5 -model swarm_member_1" 
@@ -18,6 +18,22 @@
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
       <param name="publish_frequency" type="double" value="50.0" />
       <param name="tf_prefix" value="swarm_member_1" /> 
+    </node>
+
+    <rosparam command="load" file="$(find dji_m100_controllers_gazebo)/config/body_controllers.yaml" />
+    <rosparam command="load" file="$(find dji_m100_controllers_gazebo)/config/body_params.yaml" />
+    <rosparam command="load" file="$(find dji_m100_controllers_gazebo)/config/gimbal_controllers.yaml" />
+
+    <node name="unified_controller_spawner" pkg="controller_manager" type="spawner"
+        respawn="false" output="screen"
+        args="joint_state_controller
+              gimbal_roll_controller
+              gimbal_pitch_controller
+              gimbal_yaw_controller
+              body_position_controller
+              body_velocity_controller
+              body_attitude_controller
+              --timeout 20">
     </node>
   </group>
 </launch>

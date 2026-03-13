@@ -1,60 +1,35 @@
-//this is AI slop, just for testing and getting my grips
 #include <ros/ros.h>
-#include <dji_osdk_ros/FlightTaskControl.h>
-#include <dji_osdk_ros/ObtainControlAuthority.h>
+#include <geometry_msgs/Twist.h>
+#include <nav_msgs/Odometry.h>
+
+geometry_msgs::Twist current_cmd;
+
+void odometryCallback(const nav_msgs::Odometry::ConstPtr& msg) {
+    double z_pos = msg->pose.pose.position.z;
+    
+    if (z_pos < 2.0) {
+        current_cmd.linear.z = 0.5;
+        current_cmd.linear.x = 0.0;
+    } else {
+        current_cmd.linear.z = 0.0;
+        current_cmd.linear.x = 0.5;
+    }
+}
+
+void controlLoopCallback(const ros::TimerEvent&, ros::Publisher& pub) {
+    pub.publish(current_cmd);
+}
 
 int main(int argc, char** argv) {
     ros::init(argc, argv, "ros_swarm_adapter_node");
     ros::NodeHandle nh;
 
-    // The default namespace for the DJI OSDK ROS node is usually /dji_osdk_ros
-    std::string ns = "/swarm_member_1/dji_osdk_ros";
+    ros::Subscriber odom_sub = nh.subscribe("/swarm_member_1/ground_truth/odometry", 10, odometryCallback);
+    ros::Publisher cmd_pub = nh.advertise<geometry_msgs::Twist>("/swarm_member_1/cmd_vel", 10);
 
-    ros::ServiceClient auth_client = nh.serviceClient<dji_osdk_ros::ObtainControlAuthority>(ns + "/obtain_release_control_authority");
-    ros::ServiceClient task_client = nh.serviceClient<dji_osdk_ros::FlightTaskControl>(ns + "/flight_task_control");
+    ros::Timer timer = nh.createTimer(ros::Duration(0.02), boost::bind(controlLoopCallback, _1, boost::ref(cmd_pub)));
 
-    ROS_INFO("Waiting for DJI OSDK services...");
-    auth_client.waitForExistence();
-    task_client.waitForExistence();
-
-    // 1. Obtain Control Authority
-    ROS_INFO("Obtaining control authority...");
-    dji_osdk_ros::ObtainControlAuthority auth_srv;
-    auth_srv.request.enable_obtain = true;
-    
-    if (auth_client.call(auth_srv) && auth_srv.response.result) {
-        ROS_INFO("Control authority obtained.");
-    } else {
-        ROS_ERROR("Failed to obtain control authority.");
-        return 1;
-    }
-
-    // 2. Takeoff
-    ROS_INFO("Executing takeoff...");
-    dji_osdk_ros::FlightTaskControl task_srv;
-    task_srv.request.task = dji_osdk_ros::FlightTaskControl::Request::TASK_TAKEOFF;
-    
-    if (task_client.call(task_srv) && task_srv.response.result) {
-        ROS_INFO("Takeoff successful.");
-    } else {
-        ROS_ERROR("Takeoff failed.");
-        return 1;
-    }
-
-    // 3. Hover (The drone automatically hovers after a takeoff task completes)
-    ROS_INFO("Hovering for 5 seconds...");
-    ros::Duration(5.0).sleep();
-
-    // 4. Land
-    ROS_INFO("Executing landing...");
-    task_srv.request.task = dji_osdk_ros::FlightTaskControl::Request::TASK_LAND;
-    
-    if (task_client.call(task_srv) && task_srv.response.result) {
-        ROS_INFO("Landing successful.");
-    } else {
-        ROS_ERROR("Landing failed.");
-        return 1;
-    }
+    ros::spin();
 
     return 0;
 }
