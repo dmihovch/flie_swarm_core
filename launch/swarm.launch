@@ -9,4 +9,6 @@
   <include file="$(find hector_quadrotor_gazebo)/launch/spawn_quadrotor.launch" />
 
   <node name="ros_swarm_adapter_node" pkg="flie_swarm_core" type="ros_swarm_adapter_node" output="screen" />
+  <node pkg="flie_swarm_core" type="sim_dji_bridge_node" name="sim_dji_bridge_node" output="screen" />
+
 </launch>

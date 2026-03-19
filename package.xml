@@ -8,11 +8,13 @@
   <license>MIT</license>
 
   <buildtool_depend>catkin</buildtool_depend>
+
   
   <build_depend>roscpp</build_depend>
   <build_depend>dji_osdk_ros</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>nav_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
 
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>dji_osdk_ros</build_export_depend>
@@ -21,4 +23,6 @@
   <exec_depend>dji_osdk_ros</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+
 </package>

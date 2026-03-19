@@ -1,39 +1,28 @@
 #include <ros/ros.h>
-#include <geometry_msgs/Twist.h>
-#include <nav_msgs/Odometry.h>
-
-ros::Publisher cmd_pub;
-geometry_msgs::Twist current_cmd;
-bool odom_init = false;
-double start_alt = 0.0;
-
-void odometryCallback(const nav_msgs::Odometry::ConstPtr& msg) {
-    if (!odom_init) {
-        start_alt = msg->pose.pose.position.z;
-        odom_init = true;
-    }
-
-    double z_pos = msg->pose.pose.position.z;
-
-    if (z_pos < start_alt + 2.0) {
-        current_cmd.linear.z = 0.5;
-        current_cmd.linear.x = 0.0;
-    } else {
-        current_cmd.linear.z = 0.0;
-        current_cmd.linear.x = 0.5;
-    }
-
-    cmd_pub.publish(current_cmd);
-    ROS_INFO_THROTTLE(1.0, "Alt: %.2f m | Cmd Z: %.1f | Cmd X: %.1f", z_pos, current_cmd.linear.z, current_cmd.linear.x);
-}
+#include <sensor_msgs/Joy.h>
 
 int main(int argc, char** argv) {
     ros::init(argc, argv, "ros_swarm_adapter_node");
     ros::NodeHandle nh;
 
-    cmd_pub = nh.advertise<geometry_msgs::Twist>("cmd_vel", 10);
-    ros::Subscriber odom_sub = nh.subscribe("ground_truth/state", 10, odometryCallback);
+    ros::Publisher dji_control_pub = nh.advertise<sensor_msgs::Joy>("/dji_sdk/flight_control_setpoint_ENUvelocity_yawrate", 10);
 
-    ros::spin();
+    ros::Rate loop_rate(50);
+
+    while (ros::ok()) {
+        sensor_msgs::Joy control_msg;
+        control_msg.axes.resize(4);
+
+        control_msg.axes[0] = 0.5;
+        control_msg.axes[1] = 0.0;
+        control_msg.axes[2] = 0.0;
+        control_msg.axes[3] = 0.0;
+
+        dji_control_pub.publish(control_msg);
+
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
+
     return 0;
 }
