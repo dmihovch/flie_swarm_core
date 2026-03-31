@@ -6,7 +6,7 @@ class SimDjiBridge {
 public:
     SimDjiBridge() {
         ros::NodeHandle nh;
-        twist_pub_ = nh.advertise<geometry_msgs::Twist>("/swarm_member_1/command/twist", 10);
+        twist_pub_ = nh.advertise<geometry_msgs::Twist>("cmd_vel", 10);
         joy_sub_ = nh.subscribe("/dji_sdk/flight_control_setpoint_ENUvelocity_yawrate", 10, &SimDjiBridge::joyCallback, this);
     }
 

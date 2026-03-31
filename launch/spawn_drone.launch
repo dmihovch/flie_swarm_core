@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="drone_name" />
+  <arg name="x" default="0.0" />
+  <arg name="y" default="0.0" />
+  <arg name="z" default="0.5" />
+  <arg name="x_dir" default="1.0" />
+
+  <group ns="$(arg drone_name)">
+    <param name="robot_description" command="$(find xacro)/xacro '$(find flie_swarm_core)/urdf/m100_sim.xacro' robot_namespace:=$(arg drone_name)" />
+    
+    <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x $(arg x) -y $(arg y) -z $(arg z) -model $(arg drone_name)" respawn="false" output="screen" />
+    
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+      <param name="publish_frequency" type="double" value="50.0" />
+      <param name="tf_prefix" value="$(arg drone_name)" /> 
+    </node>
+
+    <node pkg="flie_swarm_core" type="sim_dji_bridge_node" name="sim_dji_bridge_node" output="screen" />
+    
+    <node pkg="flie_swarm_core" type="ros_swarm_adapter_node" name="ros_swarm_adapter_node" output="screen">
+      <param name="x_dir" value="$(arg x_dir)" />
+    </node>
+  </group>
+</launch>

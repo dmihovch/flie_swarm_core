@@ -1,21 +1,41 @@
 <?xml version="1.0"?>
 <robot name="m100_sim" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="robot_namespace" default="/" />
   <xacro:include filename="$(find dji_m100_description)/urdf/dji_m100.urdf.xacro" />
 
   <gazebo>
     <plugin name="hector_quadrotor_simple_controller" filename="libhector_gazebo_quadrotor_simple_controller.so">
+      <robotNamespace>$(arg robot_namespace)</robotNamespace>
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
       <bodyName>base_link</bodyName>
       <topicName>cmd_vel</topicName>
       <stateTopic>ground_truth/state</stateTopic>
       <imuTopic>raw_imu</imuTopic>
-      <rollpitchVelocityPGAIN>10.0</rollpitchVelocityPGAIN>
-      <rollpitchVelocityDGAIN>0.0</rollpitchVelocityDGAIN>
-      <yawVelocityPGAIN>5.0</yawVelocityPGAIN>
-      <yawVelocityDGAIN>0.0</yawVelocityDGAIN>
-      <heightVelocityPGAIN>30.0</heightVelocityPGAIN>
-      <heightVelocityDGAIN>0.0</heightVelocityDGAIN>
+      <rollpitchVelocityPGAIN>75.0</rollpitchVelocityPGAIN>
+      <rollpitchVelocityDGAIN>5.0</rollpitchVelocityDGAIN>
+      <yawVelocityPGAIN>15.0</yawVelocityPGAIN>
+      <yawVelocityDGAIN>1.0</yawVelocityDGAIN>
+      <heightVelocityPGAIN>250.0</heightVelocityPGAIN>
+      <heightVelocityDGAIN>10.0</heightVelocityDGAIN>
+    </plugin>
+
+    <plugin name="quadrotor_imu_sim" filename="libhector_gazebo_ros_imu.so">
+      <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>raw_imu</topicName>
+    </plugin>
+
+    <plugin name="quadrotor_state_sim" filename="libgazebo_ros_p3d.so">
+      <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>ground_truth/state</topicName>
+      <gaussianNoise>0.0</gaussianNoise>
+      <frameName>world</frameName>
     </plugin>
   </gazebo>
-</robot>
+  </robot>

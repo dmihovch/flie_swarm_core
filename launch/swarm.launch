@@ -6,9 +6,17 @@
     <arg name="gui" value="true"/>
   </include>
 
-  <include file="$(find hector_quadrotor_gazebo)/launch/spawn_quadrotor.launch" />
+  <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
+    <arg name="drone_name" value="drone_1" />
+    <arg name="x" value="0.0" />
+    <arg name="y" value="2.0" />
+    <arg name="x_dir" value="1.0" />
+  </include>
 
-  <node name="ros_swarm_adapter_node" pkg="flie_swarm_core" type="ros_swarm_adapter_node" output="screen" />
-  <node pkg="flie_swarm_core" type="sim_dji_bridge_node" name="sim_dji_bridge_node" output="screen" />
-
+  <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
+    <arg name="drone_name" value="drone_2" />
+    <arg name="x" value="0.0" />
+    <arg name="y" value="-2.0" />
+    <arg name="x_dir" value="-1.0" />
+  </include>
 </launch>
