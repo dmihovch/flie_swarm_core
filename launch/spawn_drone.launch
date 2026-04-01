@@ -7,7 +7,7 @@
   <arg name="x_dir" default="1.0" />
 
   <group ns="$(arg drone_name)">
-    <param name="robot_description" command="$(find xacro)/xacro '$(find flie_swarm_core)/urdf/m100_sim.xacro' robot_namespace:=$(arg drone_name)" />
+    <param name="robot_description" command="$(find xacro)/xacro '$(find flie_swarm_core)/urdf/m100_no_frills.xacro' robot_namespace:=$(arg drone_name)" />
     
     <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x $(arg x) -y $(arg y) -z $(arg z) -model $(arg drone_name)" respawn="false" output="screen" />
     

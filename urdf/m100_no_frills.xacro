@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot name="m100_barebones" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:arg name="robot_namespace" default="/" />
+
+  <link name="base_link">
+    <inertial>
+      <mass value="2.35" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia ixx="0.01152" ixy="0.0" ixz="0.0" iyy="0.01152" iyz="0.0" izz="0.0218" />
+    </inertial>
+    <collision>
+      <geometry>
+        <box size="0.4 0.4 0.2"/>
+      </geometry>
+    </collision>
+    <visual>
+      <geometry>
+        <box size="0.4 0.4 0.2"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <gazebo>
+    <plugin name="hector_quadrotor_simple_controller" filename="libhector_gazebo_quadrotor_simple_controller.so">
+      <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>cmd_vel</topicName>
+      <stateTopic>ground_truth/state</stateTopic>
+      <imuTopic>raw_imu</imuTopic>
+      <rollpitchVelocityPGAIN>75.0</rollpitchVelocityPGAIN>
+      <rollpitchVelocityDGAIN>5.0</rollpitchVelocityDGAIN>
+      <yawVelocityPGAIN>15.0</yawVelocityPGAIN>
+      <yawVelocityDGAIN>1.0</yawVelocityDGAIN>
+      <heightVelocityPGAIN>250.0</heightVelocityPGAIN>
+      <heightVelocityDGAIN>10.0</heightVelocityDGAIN>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="quadrotor_state_sim" filename="libgazebo_ros_p3d.so">
+      <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>ground_truth/state</topicName>
+      <frameName>world</frameName>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="quadrotor_imu_sim" filename="libgazebo_ros_imu.so">
+      <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>raw_imu</topicName>
+      <serviceName>imu_service</serviceName>
+      <gaussianNoise>0.0</gaussianNoise>
+    </plugin>
+  </gazebo>
+</robot>
