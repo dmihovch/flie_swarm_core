@@ -5,11 +5,12 @@
   <arg name="y" default="0.0" />
   <arg name="z" default="0.5" />
   <arg name="x_dir" default="1.0" />
+  <arg name="y_mult" default="1.0"/>
 
   <group ns="$(arg drone_name)">
     <param name="robot_description" command="$(find xacro)/xacro '$(find flie_swarm_core)/urdf/m100_no_frills.xacro' robot_namespace:=$(arg drone_name)" />
     
-    <node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x $(arg x) -y $(arg y) -z $(arg z) -model $(arg drone_name)" respawn="false" output="screen" />
+	<node name="spawn_robot" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x $(arg x) -y $(arg y) -z $(arg z) -model $(arg drone_name) -robot_namespace /$(arg drone_name)" respawn="false" output="screen" />
     
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
       <param name="publish_frequency" type="double" value="50.0" />
@@ -20,6 +21,7 @@
     
     <node pkg="flie_swarm_core" type="ros_swarm_adapter_node" name="ros_swarm_adapter_node" output="screen">
       <param name="x_dir" value="$(arg x_dir)" />
+	  <param name="y_mult" value="$(arg y_mult)" />
     </node>
   </group>
 </launch>

@@ -2,6 +2,14 @@
 <robot name="m100_barebones" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="robot_namespace" default="/" />
 
+  <link name="base_footprint"/>
+
+  <joint name="base_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
   <link name="base_link">
     <inertial>
       <mass value="2.35" />
@@ -58,6 +66,7 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
       <bodyName>base_link</bodyName>
+      <frameName>$(arg robot_namespace)/base_link</frameName>
       <topicName>raw_imu</topicName>
       <serviceName>imu_service</serviceName>
       <gaussianNoise>0.0</gaussianNoise>
