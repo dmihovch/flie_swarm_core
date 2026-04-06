@@ -38,10 +38,9 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
       <bodyName>base_link</bodyName>
-      <base_link_frame>${clean_ns}/base_link</base_link_frame>
       <topicName>cmd_vel</topicName>
-      <stateTopic>ground_truth/state</stateTopic>
-      <imuTopic>raw_imu</imuTopic>
+      <stateTopic>dummy_state_bypass</stateTopic>
+      <imuTopic>dummy_imu_bypass</imuTopic>
       <rollpitchVelocityPGAIN>75.0</rollpitchVelocityPGAIN>
       <rollpitchVelocityDGAIN>5.0</rollpitchVelocityDGAIN>
       <yawVelocityPGAIN>15.0</yawVelocityPGAIN>
