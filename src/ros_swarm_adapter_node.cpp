@@ -29,20 +29,19 @@ int main(int argc, char** argv) {
         control_msg.axes.resize(4);
         double t = (ros::Time::now() - start_time).toSec();
 		
-		// double amplitude = 0.5;
-		// double frequency = 2.0;
-		//
-		//       control_msg.axes[0] = x_dir * amplitude * cos(t * frequency);
-		//       control_msg.axes[1] = y_mult * amplitude * sin(t * frequency);
+		double amplitude = 1;
+		double frequency = 1;
 		
-		control_msg.axes[2] = 1.;
+		control_msg.axes[0] = x_dir * amplitude * cos(t * frequency);
+		control_msg.axes[1] = y_mult * amplitude * sin(t * frequency);
+		
 
-        // if(t < 10.0)
-        // {
-        //     control_msg.axes[2] = 0.2;
-        // } else {
-        //     control_msg.axes[2] = 0.0;
-        // }
+        if(t < 5.0)
+        {
+            control_msg.axes[2] = 0.2;
+        } else {
+           control_msg.axes[2] = 0.0;
+         }
 
         control_msg.axes[3] = 0.0;
         dji_control_pub.publish(control_msg);

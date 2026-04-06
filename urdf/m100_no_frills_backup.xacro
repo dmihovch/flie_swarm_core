@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <robot name="m100_barebones" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="robot_namespace" default="/" />
-  <xacro:property name="clean_ns" value="${'$(arg robot_namespace)'.strip('/')}" />
 
   <link name="base_footprint"/>
 
@@ -38,7 +37,7 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
       <bodyName>base_link</bodyName>
-      <base_link_frame>${clean_ns}/base_link</base_link_frame>
+      <base_link_frame>$(arg robot_namespace)/base_link</base_link_frame>
       <topicName>cmd_vel</topicName>
       <stateTopic>ground_truth/state</stateTopic>
       <imuTopic>raw_imu</imuTopic>
@@ -68,7 +67,7 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
       <bodyName>base_link</bodyName>
-      <frameId>${clean_ns}/base_link</frameId>
+      <frameId>$(arg robot_namespace)/base_link</frameId>
       <topicName>raw_imu</topicName>
     </plugin>
   </gazebo>
