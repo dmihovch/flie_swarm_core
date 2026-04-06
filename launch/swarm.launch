@@ -18,7 +18,7 @@
     <arg name="drone_name" value="drone_2" />
     <arg name="x" value="0.0" />
     <arg name="y" value="-2.0" />
-    <arg name="x_dir" value="1.0" />
+    <arg name="x_dir" value="-1.0" />
     <arg name="y_mult" value="-1.0"/>
   </include>
 </launch>
