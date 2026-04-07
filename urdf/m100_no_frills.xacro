@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <robot name="m100_barebones" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="robot_namespace" default="/" />
-  <xacro:property name="clean_ns" value="${'$(arg robot_namespace)'.strip('/')}" />
 
   <link name="base_footprint"/>
 
@@ -38,15 +37,28 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
       <bodyName>base_link</bodyName>
+      <base_link_frame>base_link</base_link_frame>
       <topicName>cmd_vel</topicName>
-      <stateTopic>dummy_state_bypass</stateTopic>
-      <imuTopic>dummy_imu_bypass</imuTopic>
-      <rollpitchVelocityPGAIN>75.0</rollpitchVelocityPGAIN>
-      <rollpitchVelocityDGAIN>5.0</rollpitchVelocityDGAIN>
-      <yawVelocityPGAIN>15.0</yawVelocityPGAIN>
-      <yawVelocityDGAIN>1.0</yawVelocityDGAIN>
-      <heightVelocityPGAIN>250.0</heightVelocityPGAIN>
-      <heightVelocityDGAIN>10.0</heightVelocityDGAIN>
+      <stateTopic>ground_truth/state</stateTopic>
+      <imuTopic>raw_imu</imuTopic>
+      
+      <rollpitchProportionalGain>50.0</rollpitchProportionalGain>
+      <rollpitchDifferentialGain>5.0</rollpitchDifferentialGain>
+      <rollpitchLimit>0.5</rollpitchLimit>
+      
+      <yawProportionalGain>5.0</yawProportionalGain>
+      <yawDifferentialGain>1.0</yawDifferentialGain>
+      <yawLimit>1.5</yawLimit>
+      
+      <velocityXYProportionalGain>15.0</velocityXYProportionalGain>
+      <velocityXYDifferentialGain>2.0</velocityXYDifferentialGain>
+      <velocityXYLimit>5.0</velocityXYLimit>
+      
+      <velocityZProportionalGain>15.0</velocityZProportionalGain>
+      <velocityZDifferentialGain>2.0</velocityZDifferentialGain>
+      <velocityZLimit>5.0</velocityZLimit>
+      
+      <maxForce>150.0</maxForce>
     </plugin>
   </gazebo>
 
@@ -67,7 +79,7 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
       <bodyName>base_link</bodyName>
-      <frameId>${clean_ns}/base_link</frameId>
+      <frameId>base_link</frameId>
       <topicName>raw_imu</topicName>
     </plugin>
   </gazebo>
