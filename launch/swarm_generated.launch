@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="worlds/empty_sky.world"/>
+  </include>
+
+  <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
+    <arg name="drone_name" value="drone_1"/>
+    <arg name="x" value="0.0"/>
+    <arg name="y" value="0.0"/>
+    <arg name="drone_id" value="1"/>
+    <arg name="swarm_size" value="3"/>
+    <arg name="swarm_formation" value="flying_v"/>
+  </include>
+
+  <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
+    <arg name="drone_name" value="drone_2"/>
+    <arg name="x" value="0.0"/>
+    <arg name="y" value="2.0"/>
+    <arg name="drone_id" value="2"/>
+    <arg name="swarm_size" value="3"/>
+    <arg name="swarm_formation" value="flying_v"/>
+  </include>
+
+  <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
+    <arg name="drone_name" value="drone_3"/>
+    <arg name="x" value="0.0"/>
+    <arg name="y" value="4.0"/>
+    <arg name="drone_id" value="3"/>
+    <arg name="swarm_size" value="3"/>
+    <arg name="swarm_formation" value="flying_v"/>
+  </include>
+</launch>

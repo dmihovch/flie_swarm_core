@@ -1,7 +1,14 @@
 <?xml version="1.0"?>
 <robot name="m100_sim" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:arg name="robot_namespace" default="/" />
+  
   <xacro:include filename="$(find dji_m100_description)/urdf/dji_m100.urdf.xacro" />
+
+  <joint name="gimbal_repair_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="gimbal_pitch_link"/>
+    <origin xyz="0 0 -0.05" rpy="0 0 0"/>
+  </joint>
 
   <gazebo>
     <plugin name="hector_quadrotor_simple_controller" filename="libhector_gazebo_quadrotor_simple_controller.so">
@@ -9,33 +16,50 @@
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
       <bodyName>base_link</bodyName>
+      <base_link_frame>base_link</base_link_frame>
       <topicName>cmd_vel</topicName>
       <stateTopic>ground_truth/state</stateTopic>
       <imuTopic>raw_imu</imuTopic>
-      <rollpitchVelocityPGAIN>75.0</rollpitchVelocityPGAIN>
-      <rollpitchVelocityDGAIN>5.0</rollpitchVelocityDGAIN>
-      <yawVelocityPGAIN>15.0</yawVelocityPGAIN>
-      <yawVelocityDGAIN>1.0</yawVelocityDGAIN>
-      <heightVelocityPGAIN>250.0</heightVelocityPGAIN>
-      <heightVelocityDGAIN>10.0</heightVelocityDGAIN>
+      
+      <rollpitchProportionalGain>50.0</rollpitchProportionalGain>
+      <rollpitchDifferentialGain>5.0</rollpitchDifferentialGain>
+      <rollpitchLimit>0.5</rollpitchLimit>
+      
+      <yawProportionalGain>5.0</yawProportionalGain>
+      <yawDifferentialGain>1.0</yawDifferentialGain>
+      <yawLimit>1.5</yawLimit>
+      
+      <velocityXYProportionalGain>15.0</velocityXYProportionalGain>
+      <velocityXYDifferentialGain>2.0</velocityXYDifferentialGain>
+      <velocityXYLimit>5.0</velocityXYLimit>
+      
+      <velocityZProportionalGain>15.0</velocityZProportionalGain>
+      <velocityZDifferentialGain>2.0</velocityZDifferentialGain>
+      <velocityZLimit>5.0</velocityZLimit>
+      
+      <maxForce>150.0</maxForce>
     </plugin>
+  </gazebo>
 
-    <plugin name="quadrotor_imu_sim" filename="libhector_gazebo_ros_imu.so">
-      <robotNamespace>$(arg robot_namespace)</robotNamespace>
-      <alwaysOn>true</alwaysOn>
-      <updateRate>100.0</updateRate>
-      <bodyName>base_link</bodyName>
-      <topicName>raw_imu</topicName>
-    </plugin>
-
+  <gazebo>
     <plugin name="quadrotor_state_sim" filename="libgazebo_ros_p3d.so">
       <robotNamespace>$(arg robot_namespace)</robotNamespace>
       <alwaysOn>true</alwaysOn>
       <updateRate>100.0</updateRate>
       <bodyName>base_link</bodyName>
       <topicName>ground_truth/state</topicName>
-      <gaussianNoise>0.0</gaussianNoise>
       <frameName>world</frameName>
     </plugin>
   </gazebo>
-  </robot>
+
+  <gazebo>
+    <plugin name="quadrotor_imu_sim" filename="libhector_gazebo_ros_imu.so">
+      <robotNamespace>$(arg robot_namespace)</robotNamespace>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <frameId>base_link</frameId>
+      <topicName>raw_imu</topicName>
+    </plugin>
+  </gazebo>
+</robot>
