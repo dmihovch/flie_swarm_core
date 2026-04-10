@@ -9,88 +9,70 @@
     <arg name="x" value="3.00"/>
     <arg name="y" value="0.00"/>
     <arg name="drone_id" value="1"/>
-    <arg name="swarm_size" value="10"/>
-    <arg name="swarm_formation" value="helix"/>
+    <arg name="swarm_size" value="8"/>
+    <arg name="swarm_formation" value="carousel"/>
   </include>
 
   <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
     <arg name="drone_name" value="drone_2"/>
-    <arg name="x" value="2.43"/>
-    <arg name="y" value="1.76"/>
+    <arg name="x" value="2.12"/>
+    <arg name="y" value="2.12"/>
     <arg name="drone_id" value="2"/>
-    <arg name="swarm_size" value="10"/>
-    <arg name="swarm_formation" value="helix"/>
+    <arg name="swarm_size" value="8"/>
+    <arg name="swarm_formation" value="carousel"/>
   </include>
 
   <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
     <arg name="drone_name" value="drone_3"/>
-    <arg name="x" value="0.93"/>
-    <arg name="y" value="2.85"/>
+    <arg name="x" value="0.00"/>
+    <arg name="y" value="3.00"/>
     <arg name="drone_id" value="3"/>
-    <arg name="swarm_size" value="10"/>
-    <arg name="swarm_formation" value="helix"/>
+    <arg name="swarm_size" value="8"/>
+    <arg name="swarm_formation" value="carousel"/>
   </include>
 
   <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
     <arg name="drone_name" value="drone_4"/>
-    <arg name="x" value="-0.93"/>
-    <arg name="y" value="2.85"/>
+    <arg name="x" value="-2.12"/>
+    <arg name="y" value="2.12"/>
     <arg name="drone_id" value="4"/>
-    <arg name="swarm_size" value="10"/>
-    <arg name="swarm_formation" value="helix"/>
+    <arg name="swarm_size" value="8"/>
+    <arg name="swarm_formation" value="carousel"/>
   </include>
 
   <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
     <arg name="drone_name" value="drone_5"/>
-    <arg name="x" value="-2.43"/>
-    <arg name="y" value="1.76"/>
+    <arg name="x" value="-3.00"/>
+    <arg name="y" value="0.00"/>
     <arg name="drone_id" value="5"/>
-    <arg name="swarm_size" value="10"/>
-    <arg name="swarm_formation" value="helix"/>
+    <arg name="swarm_size" value="8"/>
+    <arg name="swarm_formation" value="carousel"/>
   </include>
 
   <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
     <arg name="drone_name" value="drone_6"/>
-    <arg name="x" value="-3.00"/>
-    <arg name="y" value="0.00"/>
+    <arg name="x" value="-2.12"/>
+    <arg name="y" value="-2.12"/>
     <arg name="drone_id" value="6"/>
-    <arg name="swarm_size" value="10"/>
-    <arg name="swarm_formation" value="helix"/>
+    <arg name="swarm_size" value="8"/>
+    <arg name="swarm_formation" value="carousel"/>
   </include>
 
   <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
     <arg name="drone_name" value="drone_7"/>
-    <arg name="x" value="-2.43"/>
-    <arg name="y" value="-1.76"/>
+    <arg name="x" value="-0.00"/>
+    <arg name="y" value="-3.00"/>
     <arg name="drone_id" value="7"/>
-    <arg name="swarm_size" value="10"/>
-    <arg name="swarm_formation" value="helix"/>
+    <arg name="swarm_size" value="8"/>
+    <arg name="swarm_formation" value="carousel"/>
   </include>
 
   <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
     <arg name="drone_name" value="drone_8"/>
-    <arg name="x" value="-0.93"/>
-    <arg name="y" value="-2.85"/>
+    <arg name="x" value="2.12"/>
+    <arg name="y" value="-2.12"/>
     <arg name="drone_id" value="8"/>
-    <arg name="swarm_size" value="10"/>
-    <arg name="swarm_formation" value="helix"/>
-  </include>
-
-  <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
-    <arg name="drone_name" value="drone_9"/>
-    <arg name="x" value="0.93"/>
-    <arg name="y" value="-2.85"/>
-    <arg name="drone_id" value="9"/>
-    <arg name="swarm_size" value="10"/>
-    <arg name="swarm_formation" value="helix"/>
-  </include>
-
-  <include file="$(find flie_swarm_core)/launch/spawn_drone.launch">
-    <arg name="drone_name" value="drone_10"/>
-    <arg name="x" value="2.43"/>
-    <arg name="y" value="-1.76"/>
-    <arg name="drone_id" value="10"/>
-    <arg name="swarm_size" value="10"/>
-    <arg name="swarm_formation" value="helix"/>
+    <arg name="swarm_size" value="8"/>
+    <arg name="swarm_formation" value="carousel"/>
   </include>
 </launch>
