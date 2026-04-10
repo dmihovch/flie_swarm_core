@@ -5,8 +5,8 @@
   <arg name="y" default="0.0" />
   <arg name="z" default="0.5" />
   <arg name="drone_id" default="1" />
-  <arg name="swarm_formation" default="flying_v"/>
   <arg name="swarm_size" default="1"/>
+  <arg name="swarm_formation" default="flying_v"/>
 
   <group ns="$(arg drone_name)">
     <param name="robot_description" command="$(find xacro)/xacro '$(find flie_swarm_core)/urdf/m100_no_frills_hector.xacro' robot_namespace:=$(arg drone_name)" />
